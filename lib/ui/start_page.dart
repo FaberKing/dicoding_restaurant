@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dicoding_restaurant/common/styles.dart';
+import 'package:dicoding_restaurant/data/provider/preferences_daily_reminder_provider.dart';
 import 'package:dicoding_restaurant/ui/favorite_page.dart';
 import 'package:dicoding_restaurant/ui/restaurant_detail_page.dart';
 import 'package:dicoding_restaurant/ui/restaurant_list_page.dart';
@@ -9,17 +10,18 @@ import 'package:dicoding_restaurant/utils/notification_helper.dart';
 import 'package:dicoding_restaurant/widgets/platform_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StartPage extends StatefulWidget {
+class StartPage extends ConsumerStatefulWidget {
   static const routeName = '/start_page';
 
   const StartPage({Key? key}) : super(key: key);
 
   @override
-  State<StartPage> createState() => _StartPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _StartPageState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _StartPageState extends ConsumerState<StartPage> {
   final NotificationHelper _notificationHelper = NotificationHelper();
   int _bottomNavIndex = 0;
 
@@ -85,6 +87,7 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+    ref.read(asyncDailyReminderProvider);
     _notificationHelper
         .configureSelectNotificationSubject(RestaurantDetailPage.routeName);
   }
