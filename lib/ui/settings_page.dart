@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:dicoding_restaurant/data/provider/preferences_provider.dart';
-import 'package:dicoding_restaurant/data/provider/schedulling_provider.dart';
+import 'package:dicoding_restaurant/data/provider/preferences_daily_reminder_provider.dart';
 import 'package:dicoding_restaurant/widgets/platform_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +37,8 @@ class SettingsPage extends ConsumerWidget {
             title: const Text('Scheduling News'),
             trailing: Consumer(
               builder: (context, ref, child) {
-                final isReminderActiove = ref.watch(asyncDailyReminderProvider);
-                return isReminderActiove.when(
+                final isReminderActive = ref.watch(asyncDailyReminderProvider);
+                return isReminderActive.when(
                   data: (data) {
                     return Switch.adaptive(
                       value: data,
@@ -47,9 +46,6 @@ class SettingsPage extends ConsumerWidget {
                         if (Platform.isIOS) {
                           null;
                         } else {
-                          ref
-                              .read(schedulingProvider.notifier)
-                              .scheduledNews(value);
                           ref
                               .read(asyncDailyReminderProvider.notifier)
                               .setDailyReminder(value);
